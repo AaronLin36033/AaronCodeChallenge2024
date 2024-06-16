@@ -7,6 +7,8 @@ sprites = []
 buttons = []
 #Add your code below
 
+background = Actor("classroom.png")
+
 def draw():
     screen.clear()
     for s in sprites:
