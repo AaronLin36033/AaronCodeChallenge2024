@@ -1,24 +1,41 @@
+from turtle import Screen
+from xmlrpc.client import APPLICATION_ERROR
 import pgzrun
+from button import Button  
 
 WIDTH = 800
 HEIGHT = 600
 
 sprites = []
 buttons = []
-#Add your code below
+current_step = 0
 
-background = Actor("classroom.png")
+
+background = ("classroom.png")
+sprite = ("devin.png", (WIDTH // 2, HEIGHT // 2))
+
+def step_changed(step):
+    global current_step
+    current_step = step
+    if step == 1:
+        buttons.clear()  
+        sprites.append()  
+
+def start_button_action():
+    step_changed(1)
+
+start_button = Button("start_up.png", (WIDTH // 2, HEIGHT // 2), start_button_action)
+buttons.append(start_button)
 
 def draw():
-    screen.clear()
+    Screen.clear()
+    background.draw()
     for s in sprites:
         s.draw()
     for b in buttons:
         b.draw()
-    # elements need to be draw here
 
 def update():
-    # any global variable need to be updated need specify global
     pass
 
 def on_mouse_down(pos):
@@ -29,4 +46,4 @@ def on_mouse_up(pos):
     for b in buttons:
         b.on_mouse_up(pos)
 
-pgzrun.go() # Must be last line
+pgzrun.go()  
