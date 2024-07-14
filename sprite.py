@@ -19,8 +19,8 @@ class Sprite(Actor):
 
     def draw_speak(self):
         position = self.topleft
-        messagebox_width = 100
-        messagebox_height = 70
+        messagebox_width = 120
+        messagebox_height = 80
         messagebox_x = position[0] + 5 + self.width
         messagebox_y = position[1] - 5 - messagebox_height
         left_radius = 0
@@ -34,6 +34,6 @@ class Sprite(Actor):
         if(position[1] - messagebox_height - 5 < 0):
           messagebox_y = 0 + 5 + messagebox_height
             
-        pygame.draw.rect(mod.screen.surface, (48, 141, 70), pygame.Rect(messagebox_x, messagebox_y, messagebox_width, messagebox_height),  0, 0, 10, 10, left_radius, right_radius)
-        pygame.draw.rect(mod.screen.surface, (255,0,0), pygame.Rect(messagebox_x, messagebox_y, messagebox_width, messagebox_height),  4, 0, 10, 10, left_radius, right_radius)
-        mod.screen.draw.textbox(self.message, (messagebox_x + 5, messagebox_y+5, messagebox_width-10, messagebox_height-10) )
+        pygame.draw.rect(mod.screen.surface, (193, 229, 245), pygame.Rect(messagebox_x, messagebox_y, messagebox_width, messagebox_height),  0, 0, 10, 10, left_radius, right_radius)
+        pygame.draw.rect(mod.screen.surface, (22,62,100), pygame.Rect(messagebox_x, messagebox_y, messagebox_width, messagebox_height),  2, 0, 10, 10, left_radius, right_radius)
+        mod.screen.draw.textbox(self.message, (messagebox_x + 5, messagebox_y+5, messagebox_width-10, messagebox_height-10), color = (0, 0, 0) )
