@@ -8,10 +8,10 @@ HEIGHT = 600
 
 sprites = []
 buttons = []
+hover_buttons = []
 current_step = 0
 
 background = Actor("classroom", (400, 300))
-background.scale = 0.6
 
 devin = Sprite("devin", (700, 450))
 devin.scale = 0.5 
@@ -29,6 +29,10 @@ def step_changed():
         next_button.show = False
         problem_button.show = False
         solution_button.show = False
+        roofbutton.show = False
+        vrbutton.show = False
+        computerbutton.show = False
+        whiteboardbutton.show = False
     elif current_step == 1:
         devin.show = True
         abby.show = True
@@ -58,10 +62,15 @@ def step_changed():
         problem_button.show = False
         solution_button.show = False
         abby.message = "Let's use natural light fiber and solar panels to reduce electricity usage."
+    elif current_step == 10:
+        roofbutton.show = True
+        vrbutton.show = True
+        computerbutton.show = True
+        whiteboardbutton.show = True
 
 def start_button_action():
     global current_step
-    current_step = 1
+    current_step = 10
     step_changed()
 
 def next_button_action():
@@ -95,6 +104,23 @@ solution_button = Button("solution", (WIDTH // 2 + 200, HEIGHT // 2 + 200), solu
 solution_button.scale = 0.2
 buttons.append(solution_button)
 
+roofbutton = Actor("roof", (400,80))
+roofbutton.imagename="roof"
+hover_buttons.append(roofbutton)
+
+vrbutton=Actor("vr", (116, 390))
+vrbutton.imagename="vr"
+hover_buttons.append(vrbutton)
+
+computerbutton=Actor("computer", (254, 329))
+computerbutton.imagename="computer"
+hover_buttons.append(computerbutton)
+
+whiteboardbutton=Actor("whiteboard", (340, 225))
+whiteboardbutton.imagename="whiteboard"
+hover_buttons.append(whiteboardbutton)
+
+
 def draw():
     screen.clear()
     background.draw()
@@ -102,6 +128,8 @@ def draw():
         s.draw()
     for b in buttons:
         b.draw()
+    for h in hover_buttons:
+        h.draw()
 
 def update():
     pass
@@ -113,6 +141,13 @@ def on_mouse_down(pos):
 def on_mouse_up(pos):
     for b in buttons:
         b.on_mouse_up(pos)
+
+def on_mouse_move(pos):
+    for h in hover_buttons:
+        if h.get_rect().collidepoint(pos):
+            h.image = h.imagename + "_hover"
+        else:
+            h.image = h.imagename
 
 step_changed()
 pgzrun.go()
