@@ -88,11 +88,11 @@ next_button.scale = 0.5
 buttons.append(next_button)
 
 problem_button = Button("problem", (WIDTH // 2 - 200, HEIGHT // 2 + 200), problem_button_action)
-problem_button.scale = 0.5
+problem_button.scale = 0.2
 buttons.append(problem_button)
 
 solution_button = Button("solution", (WIDTH // 2 + 200, HEIGHT // 2 + 200), solution_button_action)
-solution_button.scale = 0.5
+solution_button.scale = 0.2
 buttons.append(solution_button)
 
 def draw():
