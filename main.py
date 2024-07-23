@@ -70,7 +70,7 @@ def step_changed():
 
 def start_button_action():
     global current_step
-    current_step = 10
+    current_step = 1
     step_changed()
 
 def next_button_action():
@@ -88,6 +88,23 @@ def solution_button_action():
     current_step = 4
     step_changed()
 
+def roofbutton_action():
+    devin.message = "Roof: Traditional roofs don't use space efficiently and contribute to heat buildup."
+    abby.message = "Solution: Green roofs can reduce heat and provide space for plants, improving insulation and energy efficiency."
+
+def vrbutton_action():
+    devin.message = "VR Headsets: Not all students can experience field trips, and physical trips can be costly."
+    abby.message = "Solution: VR headsets allow virtual field trips, making immersive experiences accessible to all students."
+
+def computerbutton_action():
+    devin.message = "Computers: Outdated computers can hinder learning and consume a lot of power."
+    abby.message = "Solution: Using energy-efficient, modern computers can enhance learning and reduce electricity consumption."
+
+def whiteboardbutton_action():
+    devin.message = "Whiteboard: Not all students can see the board properly, and markers are unhealthy."
+    abby.message = "Solution: Digital whiteboards can be more accessible and eco-friendly, and they allow notes to be saved and shared easily."
+
+# Buttons setup
 start_button = Button("start", (WIDTH // 2, HEIGHT // 2), start_button_action)
 start_button.scale = 0.5
 buttons.append(start_button)
@@ -104,22 +121,26 @@ solution_button = Button("solution", (WIDTH // 2 + 200, HEIGHT // 2 + 200), solu
 solution_button.scale = 0.2
 buttons.append(solution_button)
 
-roofbutton = Actor("roof", (400,80))
-roofbutton.imagename="roof"
+# Hover buttons setup
+roofbutton = Actor("roof", (400, 80))
+roofbutton.imagename = "roof"
+roofbutton_action = roofbutton_action
 hover_buttons.append(roofbutton)
 
-vrbutton=Actor("vr", (116, 390))
-vrbutton.imagename="vr"
+vrbutton = Actor("vr", (116, 390))
+vrbutton.imagename = "vr"
+vrbutton_action = vrbutton_action
 hover_buttons.append(vrbutton)
 
-computerbutton=Actor("computer", (254, 329))
-computerbutton.imagename="computer"
+computerbutton = Actor("computer", (254, 329))
+computerbutton.imagename = "computer"
+computerbutton_action = computerbutton_action
 hover_buttons.append(computerbutton)
 
-whiteboardbutton=Actor("whiteboard", (340, 225))
-whiteboardbutton.imagename="whiteboard"
+whiteboardbutton = Actor("whiteboard", (340, 225))
+whiteboardbutton.imagename = "whiteboard"
+whiteboardbutton_action = whiteboardbutton_action
 hover_buttons.append(whiteboardbutton)
-
 
 def draw():
     screen.clear()
@@ -137,6 +158,16 @@ def update():
 def on_mouse_down(pos):
     for b in buttons:
         b.on_mouse_down(pos)
+    for h in hover_buttons:
+        if h.get_rect().collidepoint(pos):
+            if h == roofbutton:
+                roofbutton_action()
+            elif h == vrbutton:
+                vrbutton_action()
+            elif h == computerbutton:
+                computerbutton_action()
+            elif h == whiteboardbutton:
+                whiteboardbutton_action()
 
 def on_mouse_up(pos):
     for b in buttons:
