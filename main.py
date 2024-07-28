@@ -44,17 +44,15 @@ def step_changed():
     elif current_step == 2:
         devin.show = True
         abby.show = True
-        next_button.show = False
-        problem_button.show = True
-        solution_button.show = False
-        abby.message = "Have you noticed how much electricity the lights in this classroom use?"
+        next_button.show = True
+        abby.message = "That's great, let's see what is different between now and furture in the classroom."
+        devin.message=""
     elif current_step == 3:
         devin.show = True
         abby.show = True
-        next_button.show = False
-        problem_button.show = False
-        solution_button.show = True
-        devin.message = "It's not great for the environment. But there are solutions!"
+        next_button.show = True
+        devin.message = "Please click the area in the class room you think which is different and find out more detail."
+        abby.message = ""
     elif current_step == 4:
         devin.show = True
         abby.show = True
@@ -67,6 +65,46 @@ def step_changed():
         vrbutton.show = True
         computerbutton.show = True
         whiteboardbutton.show = True
+    elif current_step == 11:
+        abby.message = "Have you noticed how much electricity the lights in this classroom use?"
+        devin.message=""
+    elif current_step == 12:
+        devin.message="It's not great for the environment. But there are solutions!"
+        abby.message=""
+    elif current_step == 13:
+        abby.message="What do you think?"
+        devin.message=""
+    elif current_step == 14:
+        abby.message="Let's use natural light fiber and solar panels to reduce electricity usage."
+        devin.message=""
+        # todo: show the light fiber picture
+    elif current_step == 21:
+        devin.message = "Not all students can experience field trips, and physical trips can be costly."
+        abby.message = ""
+    elif current_step == 22:
+        devin.message = ""
+        abby.message = "VR headsets allow virtual field trips, making immersive experiences accessible to all students."
+    elif current_step == 23:
+        devin.message = ""
+        abby.message = ""
+    elif current_step == 31:
+        devin.message = "Outdated computers can hinder learning and consume a lot of power."
+        abby.message = ""
+    elif current_step == 32:
+        devin.message = ""
+        abby.message = "Using energy-efficient, modern computers can enhance learning and reduce electricity consumption."
+    elif current_step == 33:
+        devin.message = ""
+        abby.message = ""
+    elif current_step == 41:
+        devin.message = "Whiteboard: Not all students can see the board properly, and markers are unhealthy."
+        abby.message = ""
+    elif current_step == 42:
+        devin.message = ""
+        abby.message = "Digital whiteboards can be more accessible and eco-friendly, and they allow notes to be saved and shared easily."
+    elif current_step == 43:
+        devin.message = ""
+        abby.message = ""
 
 def start_button_action():
     global current_step
@@ -75,7 +113,10 @@ def start_button_action():
 
 def next_button_action():
     global current_step
-    current_step += 1
+    if current_step == 3 or current_step == 14 or current_step == 23 or current_step == 33 or current_step == 43:
+        current_step = 10
+    else:
+        current_step += 1
     step_changed()
 
 def problem_button_action():
@@ -89,20 +130,24 @@ def solution_button_action():
     step_changed()
 
 def roofbutton_action():
-    devin.message = "Roof: Traditional roofs don't use space efficiently and contribute to heat buildup."
-    abby.message = "Solution: Green roofs can reduce heat and provide space for plants, improving insulation and energy efficiency."
+    global current_step
+    current_step = 11
+    step_changed()
 
 def vrbutton_action():
-    devin.message = "VR Headsets: Not all students can experience field trips, and physical trips can be costly."
-    abby.message = "Solution: VR headsets allow virtual field trips, making immersive experiences accessible to all students."
+    global current_step
+    current_step = 21
+    step_changed()
 
 def computerbutton_action():
-    devin.message = "Computers: Outdated computers can hinder learning and consume a lot of power."
-    abby.message = "Solution: Using energy-efficient, modern computers can enhance learning and reduce electricity consumption."
+    global current_step
+    current_step = 31
+    step_changed()
 
 def whiteboardbutton_action():
-    devin.message = "Whiteboard: Not all students can see the board properly, and markers are unhealthy."
-    abby.message = "Solution: Digital whiteboards can be more accessible and eco-friendly, and they allow notes to be saved and shared easily."
+    global current_step
+    current_step = 41
+    step_changed()
 
 # Buttons setup
 start_button = Button("start", (WIDTH // 2, HEIGHT // 2), start_button_action)
@@ -124,33 +169,34 @@ buttons.append(solution_button)
 # Hover buttons setup
 roofbutton = Actor("roof", (400, 80))
 roofbutton.imagename = "roof"
-roofbutton_action = roofbutton_action
+roofbutton.action = roofbutton_action
 hover_buttons.append(roofbutton)
 
 vrbutton = Actor("vr", (116, 390))
 vrbutton.imagename = "vr"
-vrbutton_action = vrbutton_action
+vrbutton.action = vrbutton_action
 hover_buttons.append(vrbutton)
 
 computerbutton = Actor("computer", (254, 329))
 computerbutton.imagename = "computer"
-computerbutton_action = computerbutton_action
+computerbutton.action = computerbutton_action
 hover_buttons.append(computerbutton)
 
 whiteboardbutton = Actor("whiteboard", (340, 225))
 whiteboardbutton.imagename = "whiteboard"
-whiteboardbutton_action = whiteboardbutton_action
+whiteboardbutton.action = whiteboardbutton_action
 hover_buttons.append(whiteboardbutton)
 
 def draw():
     screen.clear()
     background.draw()
+    for h in hover_buttons:
+        h.draw()
     for s in sprites:
         s.draw()
     for b in buttons:
         b.draw()
-    for h in hover_buttons:
-        h.draw()
+
 
 def update():
     pass
@@ -159,15 +205,9 @@ def on_mouse_down(pos):
     for b in buttons:
         b.on_mouse_down(pos)
     for h in hover_buttons:
-        if h.get_rect().collidepoint(pos):
-            if h == roofbutton:
-                roofbutton_action()
-            elif h == vrbutton:
-                vrbutton_action()
-            elif h == computerbutton:
-                computerbutton_action()
-            elif h == whiteboardbutton:
-                whiteboardbutton_action()
+        if h.show == True:
+            if h.get_rect().collidepoint(pos):
+                h.action()
 
 def on_mouse_up(pos):
     for b in buttons:
@@ -175,10 +215,11 @@ def on_mouse_up(pos):
 
 def on_mouse_move(pos):
     for h in hover_buttons:
-        if h.get_rect().collidepoint(pos):
-            h.image = h.imagename + "_hover"
-        else:
-            h.image = h.imagename
+        if h.show == True:
+            if h.get_rect().collidepoint(pos):
+                h.image = h.imagename + "_hover"
+            else:
+                h.image = h.imagename
 
 step_changed()
 pgzrun.go()
