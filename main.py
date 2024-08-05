@@ -22,6 +22,8 @@ abby.scale = 0.5
 sprites.append(abby)
 
 def step_changed():
+    if music.is_playing:
+        music.stop()
     if current_step == 0:
         devin.show = False
         abby.show = False
@@ -41,17 +43,20 @@ def step_changed():
         problem_button.show = False
         solution_button.show = False
         devin.message = "Hello, I am Devin. I am going to show you what a school in the future looks like."
+        music.play_once("iamdevin")
     elif current_step == 2:
         devin.show = True
         abby.show = True
         next_button.show = True
-        abby.message = "That's great, let's see what is different between now and furture in the classroom."
+        abby.message = "That's great, let's see what is different between now and the future in the classroom."
+        music.play_once("seethefuture")
         devin.message=""
     elif current_step == 3:
         devin.show = True
         abby.show = True
         next_button.show = True
-        devin.message = "Please click the area in the class room you think which is different and find out more detail."
+        devin.message = "Please click the area in the classroom you think is different and find out more details."
+        music.play_once("clickthearea")
         abby.message = ""
     elif current_step == 4:
         devin.show = True
@@ -77,7 +82,7 @@ def step_changed():
     elif current_step == 14:
         abby.message="Let's use natural light fiber and solar panels to reduce electricity usage."
         devin.message=""
-        # todo: show the light fiber picture
+        # TODO: Show the light fiber picture
     elif current_step == 21:
         devin.message = "Not all students can experience field trips, and physical trips can be costly."
         abby.message = ""
@@ -113,7 +118,7 @@ def start_button_action():
 
 def next_button_action():
     global current_step
-    if current_step == 3 or current_step == 14 or current_step == 23 or current_step == 33 or current_step == 43:
+    if current_step in [3, 14, 23, 33, 43]:
         current_step = 10
     else:
         current_step += 1
@@ -197,7 +202,6 @@ def draw():
     for b in buttons:
         b.draw()
 
-
 def update():
     pass
 
@@ -205,7 +209,7 @@ def on_mouse_down(pos):
     for b in buttons:
         b.on_mouse_down(pos)
     for h in hover_buttons:
-        if h.show == True:
+        if h.show:
             if h.get_rect().collidepoint(pos):
                 h.action()
 
@@ -215,7 +219,7 @@ def on_mouse_up(pos):
 
 def on_mouse_move(pos):
     for h in hover_buttons:
-        if h.show == True:
+        if h.show:
             if h.get_rect().collidepoint(pos):
                 h.image = h.imagename + "_hover"
             else:
