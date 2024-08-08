@@ -65,6 +65,7 @@ def step_changed():
         problem_button.show = False
         solution_button.show = False
         abby.message = "Let's use natural light fiber and solar panels to reduce electricity usage."
+        music.play_once("naturallight")
     elif current_step == 10:
         roofbutton.show = True
         vrbutton.show = True
@@ -72,41 +73,51 @@ def step_changed():
         whiteboardbutton.show = True
     elif current_step == 11:
         abby.message = "Have you noticed how much electricity the lights in this classroom use?"
+        music.play_once("howmuchelectricity")
         devin.message=""
     elif current_step == 12:
         devin.message="It's not great for the environment. But there are solutions!"
+        music.play_once("notgreatforenviroment")
         abby.message=""
     elif current_step == 13:
         abby.message="What do you think?"
+        music.play_once("whatdoyouthink")
         devin.message=""
     elif current_step == 14:
         abby.message="Let's use natural light fiber and solar panels to reduce electricity usage."
+        music.play_once("naturallight")
         devin.message=""
         # TODO: Show the light fiber picture
     elif current_step == 21:
         devin.message = "Not all students can experience field trips, and physical trips can be costly."
+        music.play_once("")
         abby.message = ""
     elif current_step == 22:
         devin.message = ""
         abby.message = "VR headsets allow virtual field trips, making immersive experiences accessible to all students."
+        music.play_once("fieldtrips")
     elif current_step == 23:
         devin.message = ""
         abby.message = ""
     elif current_step == 31:
         devin.message = "Outdated computers can hinder learning and consume a lot of power."
+        music.play_once("outdatedcomputers")
         abby.message = ""
     elif current_step == 32:
         devin.message = ""
         abby.message = "Using energy-efficient, modern computers can enhance learning and reduce electricity consumption."
+        music.play_once("energyconsumption")
     elif current_step == 33:
         devin.message = ""
         abby.message = ""
     elif current_step == 41:
         devin.message = "Whiteboard: Not all students can see the board properly, and markers are unhealthy."
+        music.play_once("whiteboardunhealthy")
         abby.message = ""
     elif current_step == 42:
         devin.message = ""
         abby.message = "Digital whiteboards can be more accessible and eco-friendly, and they allow notes to be saved and shared easily."
+        music.play_once("moreaccessable")
     elif current_step == 43:
         devin.message = ""
         abby.message = ""
