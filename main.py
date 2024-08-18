@@ -1,4 +1,5 @@
 import os
+import webbrowser
 import pgzrun
 from pgzhelper import *
 from button import Button
@@ -11,6 +12,7 @@ HEIGHT = 600
 sprites = []
 buttons = []
 hover_buttons = []
+link_buttons = []
 current_step = 0
 clicked_classroom_buttons = set()
 
@@ -29,6 +31,16 @@ light.scale = 0.5
 light.show = False
 sprites.append(light)
 
+title = Sprite("program_title", (400, 100))
+title.scale = 0.3
+sprites.append(title)
+
+info_title = Sprite("info_title", (200, 50))
+info_title.scale = 0.3
+sprites.append(info_title)
+
+info_detail = Sprite("more_info_detail", (400, 350))
+sprites.append(info_detail)
 
 def step_changed():
     story_button.show = False
@@ -40,6 +52,13 @@ def step_changed():
     vrbutton.show = False
     computerbutton.show = False
     whiteboardbutton.show = False
+    title.show = current_step == 0
+    info_title.show = current_step == 70
+    info_detail.show = current_step == 70
+    link1button.show = current_step == 70
+    link2button.show = current_step == 70
+    link3button.show = current_step == 70
+
     if music.is_playing:
         music.stop()
     if current_step == 0:
@@ -112,6 +131,8 @@ def step_changed():
         # TODO: Show the light fiber picture
         clock.schedule(goto_classroom_buttons, 6)
     elif current_step == 21:
+        vrbutton.image="vr_hover"
+        vrbutton.show = True
         devin.message = "Not all students can experience field trips, and physical trips can be costly."
         music.play_once("fieldtrips")
         abby.message = ""
@@ -175,14 +196,14 @@ def step_changed():
         info_button.show = True
         story_button.show = True
     elif current_step == 70:
-        background.image = "" # more info page
+        background.image = "info_bg" # more info page
         abby.message = ""
         devin.message = ""
 
 
 def start_button_action():
     global current_step
-    current_step = 60
+    current_step = 70
     step_changed()
     start_button.show = False
 
@@ -232,6 +253,20 @@ def whiteboardbutton_action():
     step_changed()
     clicked_classroom_buttons.add("whiteboard")
 
+def click_link1():
+    print("clicked link 1")
+    pass
+    #webbrowser.open('https://www.viewsonic.com/library/education/what-is-an-interactive-whiteboard-5-features-you-need-to-know/')
+
+def click_link2():
+    print("clicked link 2")
+    pass
+    #webbrowser.open('https://edtechmagazine.com/higher/article/2023/01/future-computing-and-its-impact-higher-education')
+
+def click_link3():
+    print("clicked link 3")
+    pass
+    #webbrowser.open('https://edtechmagazine.com/k12/article/2023/05/how-virtual-reality-helping-kids-learn')
 
 def check_classroom_buttons():
     global current_step
@@ -311,6 +346,23 @@ whiteboardbutton.imagename = "whiteboard"
 whiteboardbutton.action = whiteboardbutton_action
 hover_buttons.append(whiteboardbutton)
 
+link1button = Actor("link1", (400, 242))
+link1button.imagename = "link1"
+link1button.scale = 0.46
+link1button.action = click_link1
+link_buttons.append(link1button)
+
+link2button = Actor("link2", (400, 364))
+link2button.imagename = "link2"
+link2button.scale = 0.46
+link2button.action = click_link2
+link_buttons.append(link2button)
+
+link3button = Actor("link3", (400, 479))
+link3button.imagename = "link3"
+link3button.scale = 0.46
+link3button.action = click_link3
+link_buttons.append(link3button)
 
 def draw():
     screen.clear()
@@ -322,6 +374,9 @@ def draw():
         s.draw()
     for b in buttons:
         b.draw()
+    for b in link_buttons:
+        if b.show:
+            b.draw()
     # draw step on screen
     screen.draw.text("step: "+str(current_step), (680, 10),
                      color=(0, 0, 0), fontsize=32)
@@ -343,6 +398,10 @@ def on_mouse_down(pos):
 def on_mouse_up(pos):
     for b in buttons:
         b.on_mouse_up(pos)
+    for l in link_buttons:
+        if l.show:
+            if l.get_rect().collidepoint(pos):
+                l.action()
 
 
 def on_mouse_move(pos):
@@ -352,6 +411,12 @@ def on_mouse_move(pos):
                 h.image = h.imagename + "_hover"
             else:
                 h.image = h.imagename
+    for l in link_buttons:
+        if l.show:
+            if l.get_rect().collidepoint(pos):
+                l.image = l.imagename + "_hover"
+            else:
+                l.image = l.imagename
 
 
 step_changed()
