@@ -39,7 +39,8 @@ info_title = Sprite("info_title", (200, 50))
 info_title.scale = 0.3
 sprites.append(info_title)
 
-info_detail = Sprite("more_info_detail", (400, 350))
+info_detail = Sprite("more_info_detail", (426, 280))
+info_detail.scale = 0.3
 sprites.append(info_detail)
 
 def step_changed():
@@ -55,9 +56,8 @@ def step_changed():
     title.show = current_step == 0
     info_title.show = current_step == 70
     info_detail.show = current_step == 70
-    link1button.show = current_step == 70
-    link2button.show = current_step == 70
-    link3button.show = current_step == 70
+    for link in link_buttons:
+        link.show = current_step == 70
 
     if music.is_playing:
         music.stop()
@@ -203,7 +203,7 @@ def step_changed():
 
 def start_button_action():
     global current_step
-    current_step = 70
+    current_step = 1
     step_changed()
     start_button.show = False
 
@@ -255,18 +255,31 @@ def whiteboardbutton_action():
 
 def click_link1():
     print("clicked link 1")
-    pass
-    #webbrowser.open('https://www.viewsonic.com/library/education/what-is-an-interactive-whiteboard-5-features-you-need-to-know/')
+    webbrowser.open('https://scienceandliteracy.org/how-to-use-virtual-reality-in-the-classroom/')
 
 def click_link2():
     print("clicked link 2")
-    pass
-    #webbrowser.open('https://edtechmagazine.com/higher/article/2023/01/future-computing-and-its-impact-higher-education')
+    webbrowser.open('https://www.axonpark.com/how-can-vr-help-with-education/')
 
 def click_link3():
     print("clicked link 3")
-    pass
-    #webbrowser.open('https://edtechmagazine.com/k12/article/2023/05/how-virtual-reality-helping-kids-learn')
+    webbrowser.open('https://www.benefyd.com/energy-efficient-computers-vs-regular-computers/')
+
+def click_link4():
+    print("clicked link 4")
+    webbrowser.open('https://www.energystar.gov/products/computers')
+
+def click_link5():
+    print("clicked link 5")
+    webbrowser.open('https://computercures.com.au/what-is-a-digital-whiteboard-and-does-your-business-need-one/')
+
+def click_link6():
+    print("clicked link 6")
+    webbrowser.open('https://www.britannica.com/technology/fiber-optics')
+
+def click_link7():
+    print("clicked link 7")
+    webbrowser.open('https://engineerinc.io/how-solar-fiber-optic-lighting-is-revolutionizing-illumination/')
 
 def check_classroom_buttons():
     global current_step
@@ -346,23 +359,23 @@ whiteboardbutton.imagename = "whiteboard"
 whiteboardbutton.action = whiteboardbutton_action
 hover_buttons.append(whiteboardbutton)
 
-link1button = Actor("link1", (400, 242))
-link1button.imagename = "link1"
-link1button.scale = 0.46
-link1button.action = click_link1
-link_buttons.append(link1button)
+def addlink(imagename, pos, action):
+    link = Actor(imagename)
+    link.scale = 0.3
+    link.topleft = pos
+    link.imagename = imagename
+    link.action = action
 
-link2button = Actor("link2", (400, 364))
-link2button.imagename = "link2"
-link2button.scale = 0.46
-link2button.action = click_link2
-link_buttons.append(link2button)
+    link_buttons.append(link)
 
-link3button = Actor("link3", (400, 479))
-link3button.imagename = "link3"
-link3button.scale = 0.46
-link3button.action = click_link3
-link_buttons.append(link3button)
+addlink("link1", (85, 155), click_link1)
+addlink("link2", (85, 175), click_link2)
+addlink("link3", (85, 255), click_link3)
+addlink("link4", (85, 275), click_link4)
+addlink("link5", (85, 340), click_link5)
+addlink("link6", (85, 425), click_link6)
+addlink("link7", (85, 445), click_link7)
+
 
 def draw():
     screen.clear()
@@ -378,8 +391,8 @@ def draw():
         if b.show:
             b.draw()
     # draw step on screen
-    screen.draw.text("step: "+str(current_step), (680, 10),
-                     color=(0, 0, 0), fontsize=32)
+    #screen.draw.text("step: "+str(current_step), (680, 10),
+    #                 color=(0, 0, 0), fontsize=32)
 
 
 def update():
