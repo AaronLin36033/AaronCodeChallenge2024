@@ -255,11 +255,11 @@ def whiteboardbutton_action():
 
 def click_link1():
     print("clicked link 1")
-    webbrowser.open('https://scienceandliteracy.org/how-to-use-virtual-reality-in-the-classroom/')
+    webbrowser.open('https://www.axonpark.com/how-can-vr-help-with-education/')
 
 def click_link2():
     print("clicked link 2")
-    webbrowser.open('https://www.axonpark.com/how-can-vr-help-with-education/')
+    webbrowser.open('https://scienceandliteracy.org/how-to-use-virtual-reality-in-the-classroom/')
 
 def click_link3():
     print("clicked link 3")
@@ -390,9 +390,6 @@ def draw():
     for b in link_buttons:
         if b.show:
             b.draw()
-    # draw step on screen
-    #screen.draw.text("step: "+str(current_step), (680, 10),
-    #                 color=(0, 0, 0), fontsize=32)
 
 
 def update():
